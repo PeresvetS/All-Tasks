@@ -24,10 +24,15 @@ export default () => ({
       },
       {
         test: /\.(png|woff|woff2|eot|ttf|svg)$/,
-        loader: 'url-loader?limit=100000',
+        use: 'url-loader',
       },
-      { test: /bower_components\/dist\/bootstrap\/js\//,
-        loader: 'imports?jQuery=jquery',
+      {
+        test: /\.(jpe?g|png|gif|svg)$/i,
+        include: /public\/assets\/images/,
+        use: ['url-loader', 'image-webpack-loader'],
+      },
+      { test: /node_modules\/dist\/bootstrap\/js\//,
+        use: 'imports?jQuery=jquery',
       },
     ],
   },

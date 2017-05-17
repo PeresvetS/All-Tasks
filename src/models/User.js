@@ -1,7 +1,7 @@
 import Sequelize from 'sequelize';
 import { encrypt } from '../lib/secure';
 
-export default connect => connect.define('User', {
+export default connect => connect.define('user_info', {
   email: {
     type: Sequelize.STRING,
     unique: true,
