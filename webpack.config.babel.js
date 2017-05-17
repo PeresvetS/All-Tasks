@@ -28,7 +28,7 @@ export default () => ({
       },
       {
         test: /\.(jpe?g|png|gif|svg)$/i,
-        include: /public\/assets\/images/,
+        include: /public\/images/,
         use: ['url-loader', 'image-webpack-loader'],
       },
       { test: /node_modules\/dist\/bootstrap\/js\//,
