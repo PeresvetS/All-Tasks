@@ -6,8 +6,6 @@ import path from 'path';
 import rollbar from 'rollbar';
 import Koa from 'koa';
 import helmet from 'koa-helmet';
-
-
 import Pug from 'koa-pug';
 import Router from 'koa-router';
 import koaLogger from 'koa-logger';
@@ -19,7 +17,6 @@ import flash from 'koa-flash-simple';
 import _ from 'lodash';
 import methodOverride from 'koa-methodoverride';
 import getWebpackConfig from '../webpack.config.babel';
-import log from './lib/logger';
 import addRoutes from './controllers';
 import container from './container';
 
@@ -61,6 +58,12 @@ export default () => {
   addRoutes(router, container);
   app.use(router.allowedMethods());
   app.use(router.routes());
+  app.use(async (ctx) => {
+    if (ctx.status !== 404) {
+      return;
+    }
+    ctx.redirect('/404');
+  });
 
   const pug = new Pug({
     viewPath: path.join(__dirname, 'views'),
@@ -75,7 +78,6 @@ export default () => {
     ],
   });
   pug.use(app);
-  log('First launch successful');
 
   const options = {
     exitOnUncaughtException: true,

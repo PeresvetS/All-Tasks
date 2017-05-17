@@ -1,3 +1,4 @@
+import rollbar from 'rollbar';
 import buildFormObj from '../lib/formObjectBuilder';
 
 export default (router, { User }) => {
@@ -18,6 +19,7 @@ export default (router, { User }) => {
         ctx.flash.set('User has been created');
         ctx.redirect(router.url('root'));
       } catch (e) {
+        rollbar.handleError(e);
         ctx.render('users/new', { f: buildFormObj(user, e) });
       }
     });

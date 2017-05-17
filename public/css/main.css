@@ -8,3 +8,11 @@ input {
   margin-top: 10px;
   margin-right: 10px;
 }
+
+.blue {
+  color: #4169e1;
+}
+
+.errDiv {
+  text-align: center;
+}

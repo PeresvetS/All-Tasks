@@ -1,6 +1,6 @@
 {
   "name": "all-task",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Hexlet project",
   "main": "dist/index.js",
   "scripts": {
