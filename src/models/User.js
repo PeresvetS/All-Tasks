@@ -9,7 +9,7 @@ export default connect => connect.define('user_info', {
       isEmail: true,
     },
   },
-  passwordDigest: {
+  passworddigest: {
     type: Sequelize.STRING,
     len: [6, +Infinity],
     validate: {
@@ -29,7 +29,7 @@ export default connect => connect.define('user_info', {
   password: {
     type: Sequelize.VIRTUAL,
     set: function set(value) {
-      this.setDataValue('passwordDigest', encrypt(value));
+      this.setDataValue('passworddigest', encrypt(value));
       this.setDataValue('password', value);
       return value;
     },

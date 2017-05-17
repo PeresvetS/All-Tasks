@@ -26,7 +26,6 @@ import container from './container';
 
 export default () => {
   rollbar.init('cdf739f901b84a7f880d778e1207638c');
-
   const app = new Koa();
 
   app.use(helmet());
