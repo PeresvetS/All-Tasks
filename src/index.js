@@ -22,7 +22,7 @@ import container from './container';
 
 
 export default () => {
-  rollbar.init('cdf739f901b84a7f880d778e1207638c');
+  rollbar.init(process.env.KEY);
   const app = new Koa();
 
   app.use(helmet());
@@ -82,8 +82,8 @@ export default () => {
   const options = {
     exitOnUncaughtException: true,
   };
-  rollbar.errorHandler('cdf739f901b84a7f880d778e1207638c');
-  rollbar.handleUncaughtExceptionsAndRejections('cdf739f901b84a7f880d778e1207638c', options);
+  rollbar.errorHandler(process.env.KEY);
+  rollbar.handleUncaughtExceptionsAndRejections(process.env.KEY, options);
 
   return app;
 };

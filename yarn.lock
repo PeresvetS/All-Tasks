@@ -1108,9 +1108,12 @@ boom@2.x.x:
   dependencies:
     hoek "2.x.x"
 
-bootstrap@^3.3.7:
-  version "3.3.7"
-  resolved "https://registry.yarnpkg.com/bootstrap/-/bootstrap-3.3.7.tgz#5a389394549f23330875a3b150656574f8a9eb71"
+bootstrap@4.0.0-alpha.6:
+  version "4.0.0-alpha.6"
+  resolved "https://registry.yarnpkg.com/bootstrap/-/bootstrap-4.0.0-alpha.6.tgz#4f54dd33ac0deac3b28407bc2df7ec608869c9c8"
+  dependencies:
+    jquery ">=1.9.1"
+    tether "^1.4.0"
 
 brace-expansion@^1.0.0, brace-expansion@^1.1.7:
   version "1.1.7"
@@ -1654,7 +1657,7 @@ cookies@~0.7.0:
     depd "~1.1.0"
     keygrip "~1.0.1"
 
-cool-ascii-faces@^1.3.4:
+cool-ascii-faces@1.3.4:
   version "1.3.4"
   resolved "https://registry.yarnpkg.com/cool-ascii-faces/-/cool-ascii-faces-1.3.4.tgz#f16a3a77dd59441481276ca4673e6a47c66fb0b2"
   dependencies:
@@ -3507,7 +3510,7 @@ imagemin-mozjpeg@^6.0.0:
     is-jpg "^1.0.0"
     mozjpeg "^4.0.0"
 
-imagemin-optipng@^5.2.0, imagemin-optipng@^5.2.1:
+imagemin-optipng@^5.2.1:
   version "5.2.1"
   resolved "https://registry.yarnpkg.com/imagemin-optipng/-/imagemin-optipng-5.2.1.tgz#d22da412c09f5ff00a4339960b98a88b1dbe8695"
   dependencies:
@@ -3523,14 +3526,14 @@ imagemin-pngquant@^5.0.0:
     is-png "^1.0.0"
     pngquant-bin "^3.0.0"
 
-imagemin-svgo@^5.2.0, imagemin-svgo@^5.2.1:
+imagemin-svgo@^5.2.1:
   version "5.2.1"
   resolved "https://registry.yarnpkg.com/imagemin-svgo/-/imagemin-svgo-5.2.1.tgz#74d593ce4cbe1b87efdb3d06a4a56078f71a8147"
   dependencies:
     is-svg "^2.0.0"
     svgo "^0.7.0"
 
-imagemin@^5.2.0, imagemin@^5.2.2:
+imagemin@^5.2.2:
   version "5.3.1"
   resolved "https://registry.yarnpkg.com/imagemin/-/imagemin-5.3.1.tgz#f19c2eee1e71ba6c6558c515f9fc96680189a6d4"
   dependencies:
@@ -3540,18 +3543,6 @@ imagemin@^5.2.0, imagemin@^5.2.2:
     p-pipe "^1.1.0"
     pify "^2.3.0"
     replace-ext "^1.0.0"
-
-img-loader@^2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/img-loader/-/img-loader-2.0.0.tgz#583740b3e2a38aeba5435c7dd530be9ce7454fd9"
-  dependencies:
-    imagemin "^5.2.0"
-    imagemin-gifsicle "^5.1.0"
-    imagemin-mozjpeg "^6.0.0"
-    imagemin-optipng "^5.2.0"
-    imagemin-pngquant "^5.0.0"
-    imagemin-svgo "^5.2.0"
-    loader-utils "^1.0.4"
 
 imurmurhash@^0.1.4:
   version "0.1.4"
@@ -4212,7 +4203,7 @@ jquery-ujs@^1.2.2:
   dependencies:
     jquery ">=1.8.0"
 
-jquery@>=1.8.0, jquery@^3.2.1:
+jquery@>=1.8.0, jquery@>=1.9.1, jquery@^3.2.1:
   version "3.2.1"
   resolved "https://registry.yarnpkg.com/jquery/-/jquery-3.2.1.tgz#5c4d9de652af6cd0a770154a631bba12b015c787"
 
@@ -4558,7 +4549,7 @@ loader-utils@^0.2.16:
     json5 "^0.5.0"
     object-assign "^4.0.1"
 
-loader-utils@^1.0.2, loader-utils@^1.0.4, loader-utils@^1.1.0, loader-utils@^1.x:
+loader-utils@^1.0.2, loader-utils@^1.1.0, loader-utils@^1.x:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/loader-utils/-/loader-utils-1.1.0.tgz#c98aef488bcceda2ffb5e2de646d6a754429f5cd"
   dependencies:
@@ -7271,6 +7262,10 @@ test-exclude@^3.3.0:
     object-assign "^4.1.0"
     read-pkg-up "^1.0.1"
     require-main-filename "^1.0.1"
+
+tether@^1.4.0:
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/tether/-/tether-1.4.0.tgz#0f9fa171f75bf58485d8149e94799d7ae74d1c1a"
 
 text-table@~0.2.0:
   version "0.2.0"

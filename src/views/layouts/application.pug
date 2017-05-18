@@ -8,18 +8,17 @@ html(lang="en")
     script(src='/assets/application.js')
     link(rel='stylesheet' href='/css/main.css')
   body
-    nav.navbar.navbar-default
+    nav.navbar.navbar-toggleable-md.navbar-light.bg-faded
       .navbar-header
-        button.navbar-toggle.collapsed(type="button" data-toggle="collapse"
+        button.navbar-toggler.navbar-toggler-right(type="button" data-toggle="collapse"
         data-target="#" aria-expanded="false")
-          span.icon-bar
-        a.navbar-brand(href="/")
-          p All-Tasks
-      .collapse.navbar-collapse
-        ul.nav.navbar-nav
+          span.navbar-toggler-icon
+        a.navbar-brand(href="/") All-Tasks      
+      .collapse.navbar-collapse(id="navbarSupportedContent")
+        ul.navbar-nav.mr-auto
           li.nav-item
             a.nav-link(href=urlFor('users')) Users
-        ul.nav.navbar-nav
+        ul.navbar-nav.justify-content-end
           if isSignedIn()
             li.nav-item
               a.nav-link(href=urlFor('session') data-method='delete' rel='nofollow') Sign Out
@@ -27,12 +26,10 @@ html(lang="en")
             li.nav-item
               a.nav-link(href=urlFor('newSession')) Sign In
             li.nav-item
-              a.nav-link(href=urlFor('newUser')) Sign Up
-        ul.nav.navbar-nav.navbar-right
-          li.nav.item
-            img.brand(src='/images/task.png' alt='logo')
+              a.nav-link(href=urlFor('newUser')) Sign Up &nbsp;
+          li.nav-item
+            img.d-inline-block.align-top(src='/images/task.png' alt='logo')
     .container
-      .content.row
         - const msg = flash.get()
         if msg
           .alert.alert-info.m-3= msg

@@ -31,9 +31,6 @@ export default () => ({
         include: /public\/images/,
         use: ['url-loader', 'image-webpack-loader'],
       },
-      { test: /node_modules\/dist\/bootstrap\/js\//,
-        use: 'imports?jQuery=jquery',
-      },
     ],
   },
   plugins: [
