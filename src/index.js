@@ -22,7 +22,7 @@ import container from './container';
 
 
 export default () => {
-  rollbar.init(process.env.KEY);
+  rollbar.init(process.env.ROLLBARKEY);
   const app = new Koa();
 
   app.use(helmet());
@@ -38,13 +38,13 @@ export default () => {
     await next();
   });
   app.use(bodyParser());
-  /* eslint-disable */
-  app.use(methodOverride((req) => {
+
+  app.use(methodOverride((req) => { // eslint-disable-line consistent-return
     if (req.body && typeof req.body === 'object' && '_method' in req.body) {
-      return req.body._method;
+      return req.body._method; // eslint-disable-line no-underscore-dangle
     }
   }));
-  /* eslint-enable */
+
   app.use(serve(path.join(__dirname, '..', 'public')));
 
   if (process.env.NODE_ENV !== 'test') {
@@ -81,8 +81,8 @@ export default () => {
   const options = {
     exitOnUncaughtException: true,
   };
-  rollbar.errorHandler(process.env.KEY);
-  rollbar.handleUncaughtExceptionsAndRejections(process.env.KEY, options);
+  rollbar.errorHandler(process.env.ROLLBARKEY);
+  rollbar.handleUncaughtExceptionsAndRejections(process.env.ROLLBARKEY, options);
 
   return app;
 };

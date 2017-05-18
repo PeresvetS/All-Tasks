@@ -6,9 +6,7 @@ describe('requests', () => {
   const server = app().listen();
 
   beforeAll(() => {
-    /* eslint-disable */
-    jasmine.addMatchers(matchers);
-    /* eslint-enable */
+    jasmine.addMatchers(matchers); // eslint-disable-line no-undef
   });
 
   it('GET /', async () => {

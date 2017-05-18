@@ -1,6 +1,5 @@
 import crypto from 'crypto';
 
-/* eslint-disable */
-export const encrypt = value => crypto.createHmac('sha256', process.env.SECRET)
+export const encrypt = value => crypto.createHmac('sha256', process.env.SECRET) // eslint-disable-line import/prefer-default-export
   .update(value)
   .digest('hex');
