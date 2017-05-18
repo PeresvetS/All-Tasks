@@ -6,7 +6,6 @@ html(lang="en")
     title= Title
     script(src='/assets/vendor.js')
     script(src='/assets/application.js')
-    link(rel='stylesheet' href='/css/main.css')
   body
     nav.navbar.navbar-toggleable-md.navbar-light.bg-faded
       .navbar-header
@@ -21,14 +20,12 @@ html(lang="en")
         ul.navbar-nav.justify-content-end
           if isSignedIn()
             li.nav-item
-              a.nav-link(href=urlFor('session') data-method='delete' rel='nofollow') Sign Out
+              a.nav-link(href=urlFor('session') data-method='delete' rel='nofollow') ⇐ Sign Out
           else
             li.nav-item
-              a.nav-link(href=urlFor('newSession')) Sign In
+              a.nav-link(href=urlFor('newSession')) ⇒ Sign In
             li.nav-item
-              a.nav-link(href=urlFor('newUser')) Sign Up &nbsp;
-          li.nav-item
-            img.d-inline-block.align-top(src='/images/task.png' alt='logo')
+              a.nav-link(href=urlFor('newUser')) ⇑ Sign Up &nbsp;
     .container
         - const msg = flash.get()
         if msg

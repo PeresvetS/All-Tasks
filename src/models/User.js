@@ -26,6 +26,9 @@ export default connect => connect.define('user_info', {
     field: 'last_name',
     len: [3, +Infinity],
   },
+  createdAt: {
+    type: Sequelize.STRING,
+  },
   password: {
     type: Sequelize.VIRTUAL,
     set: function set(value) {
@@ -42,6 +45,7 @@ export default connect => connect.define('user_info', {
     fullName: function fullName() {
       return `${this.firstName} ${this.lastName}`;
     },
+
   },
   freezeTableName: true, // Model tableName will be the same as the model name
 });

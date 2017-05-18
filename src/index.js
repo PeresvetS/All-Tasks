@@ -59,10 +59,9 @@ export default () => {
   app.use(router.allowedMethods());
   app.use(router.routes());
   app.use(async (ctx) => {
-    if (ctx.status !== 404) {
-      return;
+    if (ctx.status === 404) {
+      ctx.redirect('/404');
     }
-    ctx.redirect('/404');
   });
 
   const pug = new Pug({
