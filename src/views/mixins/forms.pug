@@ -9,13 +9,13 @@
       - const value = f.object[property] === undefined ? '' : f.object[property]
       .form-group.row.justify-content-center(class=(f.errors[property] && 'has-danger'))
         
-        .col-sm-10.offset-md-5
+        .col-sm-5
           input(name=getInputName(f, property) class='form-control' size="50" type=options['as'] value=`${value}` placeholder=`${property}`)
         if f.errors[property]
-          .col-sm-10.offset-md-5
+          .col-sm-5
             .form-control-feedback= f.errors[property].map(({ message }) => message).join('. ')
 
     mixin button(f, type = 'submit')
-      .form-group.row
-          .offset-sm-4.col-sm-10
-            input.offset-sm-8(class='btn btn-primary' type=`${type}` value=`submit`)
+      .form-group.row.justify-content-center
+          .coll
+            input(class='btn btn-primary' type=`${type}` value=`submit`)
