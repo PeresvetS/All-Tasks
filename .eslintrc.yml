@@ -1,6 +1,7 @@
 ---
 
 plugins: [jest]
+# plugins: [flowtype]
 
 env:
   node: true
@@ -20,4 +21,4 @@ extends:
   - plugin:import/warnings
 
 rules:
-  no-console: 0  
+  no-console: 0

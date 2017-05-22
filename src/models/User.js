@@ -4,14 +4,23 @@ import { encrypt } from '../lib/secure';
 export default connect => connect.define('user_info', {
   email: {
     type: Sequelize.STRING,
-    unique: true,
+    unique: {
+      args: true,
+      msg: 'This email already use.',
+    },
     validate: {
-      isEmail: true,
+      isEmail: {
+        args: true,
+        msg: 'The email is invalid.',
+      },
+      notEmpty: {
+        args: true,
+        msg: 'The email should not be empty.',
+      },
     },
   },
   passworddigest: {
     type: Sequelize.STRING,
-    len: [6, +Infinity],
     validate: {
       notEmpty: true,
     },
@@ -19,15 +28,30 @@ export default connect => connect.define('user_info', {
   firstName: {
     type: Sequelize.STRING,
     field: 'first_name',
-    len: [3, +Infinity],
+    validate: {
+      len: {
+        args: [3, +Infinity],
+        msg: 'The password must contain at least 3 characters.',
+      },
+      notEmpty: {
+        args: true,
+        msg: 'Please enter your first name.',
+      },
+    },
   },
   lastName: {
     type: Sequelize.STRING,
     field: 'last_name',
-    len: [3, +Infinity],
-  },
-  createdAt: {
-    type: Sequelize.STRING,
+    validate: {
+      len: {
+        args: [3, +Infinity],
+        msg: 'The password must contain at least 3 characters.',
+      },
+      notEmpty: {
+        args: true,
+        msg: 'Please enter your last name.',
+      },
+    },
   },
   password: {
     type: Sequelize.VIRTUAL,
@@ -37,15 +61,21 @@ export default connect => connect.define('user_info', {
       return value;
     },
     validate: {
-      len: [1, +Infinity],
+      len: {
+        args: [6, +Infinity],
+        msg: 'The password must contain at least 6 characters.',
+      },
     },
+  },
+  avatar: {
+    type: Sequelize.STRING,
+    defaultValue: '/images/default.png',
   },
 }, {
   getterMethods: {
     fullName: function fullName() {
       return `${this.firstName} ${this.lastName}`;
     },
-
   },
   freezeTableName: true, // Model tableName will be the same as the model name
 });

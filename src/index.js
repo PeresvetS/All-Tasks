@@ -1,9 +1,9 @@
 // @flow
 
 import 'babel-polyfill';
-
 import path from 'path';
 import rollbar from 'rollbar';
+import dateFormat from 'dateformat';
 import Koa from 'koa';
 import helmet from 'koa-helmet';
 import Pug from 'koa-pug';
@@ -21,8 +21,8 @@ import addRoutes from './controllers';
 import container from './container';
 
 
-export default () => {
-  rollbar.init(process.env.ROLLBARKEY);
+export default() => {
+  rollbar.init(process.env.ROLLBAR_KEY);
   const app = new Koa();
 
   app.use(helmet());
@@ -33,6 +33,9 @@ export default () => {
   app.use(async (ctx, next) => {
     ctx.state = {
       flash: ctx.flash,
+      userName: () => ctx.session.userName,
+      userId: () => ctx.session.userId,
+      userAvatar: () => ctx.session.userAvatar,
       isSignedIn: () => ctx.session.userId !== undefined,
     };
     await next();
@@ -48,9 +51,7 @@ export default () => {
   app.use(serve(path.join(__dirname, '..', 'public')));
 
   if (process.env.NODE_ENV !== 'test') {
-    app.use(middleware({
-      config: getWebpackConfig(),
-    }));
+    app.use(middleware({ config: getWebpackConfig() }));
   }
 
   app.use(koaLogger());
@@ -58,6 +59,7 @@ export default () => {
   addRoutes(router, container);
   app.use(router.allowedMethods());
   app.use(router.routes());
+
   app.use(async (ctx) => {
     if (ctx.status === 404) {
       ctx.redirect('/404');
@@ -74,15 +76,16 @@ export default () => {
     helperPath: [
       { _ },
       { urlFor: (...args) => router.url(...args) },
+      { changeFormat: (date, format) => dateFormat(date, format) },
     ],
   });
   pug.use(app);
 
-  const options = {
+  const optionsRollbar = {
     exitOnUncaughtException: true,
   };
-  rollbar.errorHandler(process.env.ROLLBARKEY);
-  rollbar.handleUncaughtExceptionsAndRejections(process.env.ROLLBARKEY, options);
+  rollbar.errorHandler(process.env.ROLLBAR_KEY);
+  rollbar.handleUncaughtExceptionsAndRejections(process.env.ROLLBAR_KEY, optionsRollbar);
 
   return app;
 };

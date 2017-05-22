@@ -1,15 +1,20 @@
 extends /layouts/application.pug
 
 block content
-  table.table.table-stripped
+  br
+  table.table.table-hover
     thead
       tr
-        th Full Name
-        th Email
-        th Created At
+        th.text-center Full Name
+        th.text-center Email
+        th.text-center Created At
+        th.text-center Profile
     tbody
-      each user in users
-        tr
-          td= user.fullName
-          td= user.email
-          td= user.createdAt
+      if users
+        each user in users
+          tr
+            td.text-center= user.fullName
+            td.text-center= user.email
+            td.text-center= changeFormat(user.createdAt, 'mmmm d, yyyy')
+            td.text-center
+              a(href= urlFor('userProfile', user.id)) view

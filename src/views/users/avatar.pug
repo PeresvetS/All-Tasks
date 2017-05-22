@@ -1,0 +1,23 @@
+extends /layouts/application.pug
+
+block content
+  br
+  .row
+    .col-4
+    .col
+      h2 Your current avatar:
+      br
+      img.rounded-circle(src=userAvatar() width='300px' height='300px')
+      br
+      br
+      form(action=`/users/${userId()}` method='post' enctype="multipart/form-data")
+        .form-group
+          label.custom-file
+            input.custom-file-input(type="file" multiple name="file")
+            span.custom-file-control
+        small Upload png/jpg image with a maximum size of 4 MB
+        .d-flex.flex-row
+          .p-3
+            input.btn.btn-success.btn-lg(type="submit" value="submit")
+          .p-3    
+            a.btn.btn-primary.btn-lg(href=`/users/${userId()}` data-method='get' role='button' rel='nofollow') Back

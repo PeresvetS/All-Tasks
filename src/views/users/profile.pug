@@ -1,0 +1,44 @@
+extends /layouts/application.pug
+
+block content
+  if user
+    br
+    .row.align-items-center
+      .col-6.justify-content-center.d-flex
+        table.table.table-striped.table-bordered
+          thead
+            tr
+              th.text-center ID
+              th.text-center= user.id
+          tbody    
+            tr  
+              th.text-center Email
+              td.text-center= user.email
+            tr  
+              th.text-center fullName
+              td.text-center= user.firstName
+            tr  
+              th.text-center Last Name
+              td.text-center= user.lastName
+            tr  
+              th.text-center createdAt
+              td.text-center= changeFormat(user.createdAt, 'mmmm d, yyyy')
+      .col-6.justify-content-center.d-flex
+        img.rounded-circle(src=user.avatar width='300px' height='300px')
+        
+    if userId() === user.id 
+      br
+      .d-flex.flex-row.justify-content-center
+        .p-3
+          a.btn.btn-success.btn-lg(href=urlFor('avatarChange', user.id) data-method='get' role='button' rel='nofollow') Change avatar
+        .p-3
+          a.btn.btn-primary.btn-lg(href=urlFor('userEdit', user.id) data-method='get' role='button' rel='nofollow') Edit profile
+        .p-3
+          a.btn.btn-danger.btn-lg(href=urlFor('userDelete', user.id)  data-method='delete' role='button' rel='nofollow') Delete profile
+      
+  else
+    .content.text-center
+      br
+      h1 The non-existent user!
+      h3.text-info Ooops, it seems like this user does not exist! 
+  
