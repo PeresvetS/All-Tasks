@@ -19,7 +19,7 @@ export default (router, { User }) => {
       try {
         await user.save();
         ctx.flash.set('User has been created');
-        console.log(ctx.redirect(router.url('root')));
+        ctx.redirect(router.url('root'));
       } catch (e) {
         ctx.render('users/new', { f: buildFormObj(user, e) });
       }

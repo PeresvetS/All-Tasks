@@ -19,8 +19,7 @@ build:
 	rm -rf dist
 	npm run build
 
-test:
-	NODE_ENV=test npm test
+test: init NODE_ENV=test npm test
 
 check-types:
 	npm run flow
