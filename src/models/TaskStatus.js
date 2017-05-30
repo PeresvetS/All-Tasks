@@ -12,7 +12,7 @@ export default connect => connect.define('TaskStatus', {
     },
   },
   statusAvatar: {
-    type: Sequelize.INTEGER,
+    type: Sequelize.STRING,
     validate: {
       notEmpty: {
         args: true,
