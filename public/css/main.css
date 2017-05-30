@@ -11,3 +11,7 @@ html, body {
   height: 5%;
   clear: both;
 }
+
+.width10pr {
+  width: 10%;
+}

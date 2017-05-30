@@ -64,7 +64,7 @@
       .p-2.d-flex.flex-column
         small.p-2= changeFormat(comment.updatedAt, 'mmmm d, yyyy')
         .p-2.lead= comment.content
-      .p-2.d-flex.flex-column.justify-content-center
+      .p-2.d-flex.flex-column.justify-content-center.width10pr
         if userId() === comment.autorId
           a.btn.btn-warning.p-2(href=urlFor('updateComment', comment.id) data-method='get' role='button' rel='nofollow') 
             i.mr-1.fa-pencil
