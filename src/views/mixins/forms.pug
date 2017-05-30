@@ -1,20 +1,75 @@
 - const getInputName = (f, property) => `${f.name}[${property}]`
   mixin formFor(f, options = {})
+    form(action=get(options, 'url') method=get(options, 'method', 'get'))
 
-    form(action=_.get(options, 'url') method=_.get(options, 'method', 'get'))
-      br
       block  
         
-  mixin input(f, property, options = { as: 'text' })
+  mixin input(position, f, property, options = { as: 'text' })
+    - const value = f.object[property] === undefined ? '' : f.object[property]
+    case position
+      when 'center' 
+        .row.justify-content-center
+          label= property
+        .row.justify-content-center
+          .form-group.col-sm-5(class=(f.errors[property] && 'has-danger'))
+            div
+              input(name=getInputName(f, property) class='form-control' size="50" type=options['as'] value=`${value}` placeholder=`${property}`)
+            if f.errors[property]
+              .form-control-feedback= f.errors[property].map(({ message }) => message).join('. ')
+      default
+          .form-group(class=(f.errors[property] && 'has-danger'))
+            input(name=getInputName(f, property) class='form-control' size="50" type=options['as'] value=`${value}` placeholder=`${options}`)
+            if f.errors[property]
+              .form-control-feedback= f.errors[property].map(({ message }) => message).join('. ')
+        
+          
+  mixin select(f, property, users, labelName, options = { as: 'text' })
     - const value = f.object[property] === undefined ? '' : f.object[property]
     .row.justify-content-center
+      label= property
+    .row.justify-content-center
       .form-group.col-sm-5(class=(f.errors[property] && 'has-danger'))
-        div
-          input(name=getInputName(f, property) class='form-control' size="50" type=options['as'] value=`${value}` placeholder=`${property}`)
+        select(name=getInputName(f, property) class='form-control' type=options['as'] value=`${value}`)
+          if users
+            each user in users
+              option(value= user.id)= `${user.firstName} ${user.lastName}`
         if f.errors[property]
-          .form-control-feedback= f.errors[property].map(({ message }) => message).join('. ')
+          .form-control-feedback= f.errors[property].map(({ message }) => message).join('. ')        
+        
 
   mixin button(f, type = 'submit')
-      .form-group.row.justify-content-center
-          .coll
-            input(class='btn btn-primary' type=`${type}` value=`✓ submit`)
+    .form-group.row.justify-content-center.p-2
+        .coll
+          input(class='btn btn-primary' type=`${type}` value=`✓ Submit`)
+              
+  mixin taskBox(task)
+    a(href='/tasks/' + task.id)
+      .card.p-3
+        img.card-img-top.img-fluid(src= task.statusAvatar)
+        .card-block  
+          div
+            .card-title= task.status
+            h1.card-text= task.name
+            h6.card-text= `Created by: ${task.creator}`
+            div
+            h6.card-text= `Assigned To: ${task.assignedTo}`
+            div
+            small= task.description
+            
+  mixin commentBox(comment)
+    .p-2.d-flex.flex-row.justify-content-between
+      .p-2.d-flex.flex-column
+        small.p-2.text-center= comment.autorName
+        img.p-2.rounded-circle(src=comment.autorAvatar alt='autor avatar' width='120px' height='120px')
+      .p-2.d-flex.flex-column
+        small.p-2= changeFormat(comment.updatedAt, 'mmmm d, yyyy')
+        .p-2.lead= comment.content
+      .p-2.d-flex.flex-column.justify-content-center
+        if userId() === comment.autorId
+          a.btn.btn-warning.p-2(href=urlFor('updateComment', comment.id) data-method='get' role='button' rel='nofollow') 
+            i.mr-1.fa-pencil
+            |   Edit
+          a.btn.btn-danger.p-2(href=urlFor('deleteComment', comment.id) data-method='delete' role='button' rel='nofollow') 
+            i.mr-1.fa-eraser
+            |   Delete
+    hr.my-2      

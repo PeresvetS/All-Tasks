@@ -1,0 +1,64 @@
+extends /layouts/application.pug
+
+block content
+  .d-flex.flex-column
+    .p-2
+      table.table
+        thead.thead-default
+          tr
+            th.text-center ID
+            th.text-center Name
+            th.text-center Created At
+            th.text-center Status
+            th.text-center Tags
+        tbody
+          tr
+            td.text-center= task.id
+            td.text-center= task.name
+            td.text-center= changeFormat(task.createdAt, 'mmmm d, yyyy')
+            td.text-center= task.status
+            td.text-center
+              if tags
+                ul.list-inline
+                  each tag in tags
+                    li.list-inline-item
+                      p= tag.name
+                   
+      hr.my-4
+        
+    .p-2.d-flex.flex-row
+      .p-2.p-2.d-flex.flex-row 
+        .p-2
+          h6 Creator:
+          p= task.creator
+          img.rounded-circle(src=task.creatorImg alt='creator avatar' width='150px' height='150px')
+        .p-2
+          h6 Assigned To:
+          p= task.assignedTo
+          img.rounded-circle(src=task.assignedToImg alt='assignedTo avatar' width='150px' height='150px')
+    
+      .p-2.text-center.blockquote.d-flex.flex-column(style={width: '60%'})
+        .p-2.mb-auto
+          h5 
+            strong Description
+          p.Lead= task.description
+        .p-2
+          a.btn.btn-warning(href=urlFor('editTask', task.id) data-method='get' role='button' rel='nofollow')
+            i.mr-1.fa-pencil-square-o
+            |   Edit task
+          a.btn.btn-danger(href=urlFor('deleteTask', task.id)  data-method='delete' role='button' rel='nofollow')
+            i.mr-1.fa-trash
+            |   Delete task   
+        
+      
+  +formFor(f, { url: urlFor('newComment', { id: task.id }), method: 'post' })
+    +input('left', f, 'content', 'Comment')
+    .form-group
+      button.btn.btn-primary
+        i.mr-1.fa-plus
+        |   Add comment
+  hr.my-4   
+  
+  if comments
+    each comment in comments
+      +commentBox(comment)

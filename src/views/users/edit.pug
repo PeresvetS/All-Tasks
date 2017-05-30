@@ -2,10 +2,14 @@ extends /layouts/application.pug
 
 block content
   +formFor(f, { url: urlFor('userUpdate', f.object.id), method: 'post' })
-    +input(f, 'email')
-    +input(f, 'firstName')
-    +input(f, 'lastName')
+    +input('center', f, 'email')
+    +input('center', f, 'firstName')
+    +input('center', f, 'lastName')
     input(type="hidden" name="_method" value="PATCH")
     +button(f)
+    .row.justify-content-center
+      a.btn.btn-warning(href=`/users/${userId()}` data-method='get' role='button' rel='nofollow') 
+        i.mr-1.fa-long-arrow-left
+        |   Back
     
     

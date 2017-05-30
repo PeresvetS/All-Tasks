@@ -1,0 +1,13 @@
+extends /layouts/application.pug
+
+block content
+  +formFor(f, { url: urlFor('createTask'), method: 'post' })
+    +input('center', f, 'name', 'Name')
+    +input('center', f, 'description', 'description')
+    +input('center', f, 'Tags', 'Tags')
+    +select(f, 'assignedToId', users)
+    +button(f)
+    .row.justify-content-center
+      a.btn.btn-warning(href='/tasks/' data-method='get' role='button' rel='nofollow') 
+        i.mr-1.fa-long-arrow-left
+        |   Back

@@ -2,19 +2,19 @@
 
 import 'babel-polyfill';
 import path from 'path';
-import rollbar from 'rollbar';
-import dateFormat from 'dateformat';
 import Koa from 'koa';
-import helmet from 'koa-helmet';
+import { get } from 'lodash';
 import Pug from 'koa-pug';
+import rollbar from 'rollbar';
+import serve from 'koa-static';
+import helmet from 'koa-helmet';
 import Router from 'koa-router';
 import koaLogger from 'koa-logger';
-import serve from 'koa-static';
+import dateFormat from 'dateformat';
 import middleware from 'koa-webpack';
+import flash from 'koa-flash-simple';
 import bodyParser from 'koa-bodyparser';
 import session from 'koa-generic-session';
-import flash from 'koa-flash-simple';
-import _ from 'lodash';
 import methodOverride from 'koa-methodoverride';
 import getWebpackConfig from '../webpack.config.babel';
 import addRoutes from './controllers';
@@ -38,7 +38,12 @@ export default() => {
       userAvatar: () => ctx.session.userAvatar,
       isSignedIn: () => ctx.session.userId !== undefined,
     };
-    await next();
+    try {
+      await next();
+    } catch (err) {
+      err.status = err.statusCode || err.status || 500;
+      ctx.redirect('/500');
+    }
   });
   app.use(bodyParser());
 
@@ -56,9 +61,21 @@ export default() => {
 
   app.use(koaLogger());
   const router = new Router();
+
+  const isLogIn = async (ctx, next) => {
+    if (ctx.session.userId) {
+      await next();
+    } else {
+      ctx.flash.set('You shoud log in to see this page');
+      ctx.redirect(router.url('newSession'));
+    }
+  };
+  router.use('/tasks', isLogIn);
+
   addRoutes(router, container);
   app.use(router.allowedMethods());
   app.use(router.routes());
+
 
   app.use(async (ctx) => {
     if (ctx.status === 404) {
@@ -74,7 +91,7 @@ export default() => {
     locals: [],
     basedir: path.join(__dirname, 'views'),
     helperPath: [
-      { _ },
+      { get },
       { urlFor: (...args) => router.url(...args) },
       { changeFormat: (date, format) => dateFormat(date, format) },
     ],

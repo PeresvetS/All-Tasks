@@ -1,6 +1,7 @@
+import { parse } from 'path';
 import rollbar from 'rollbar';
 import koaBody from 'koa-body';
-import fs from 'fs-extra';
+import { remove } from 'fs-extra';
 import buildFormObj from '../lib/formObjectBuilder';
 
 export default (router, { User }) => {
@@ -25,13 +26,12 @@ export default (router, { User }) => {
       }
     })
     .get('userProfile', '/users/:id', async (ctx) => {
+      const id = ctx.params.id;
+      const user = await User.findById(id);
       try {
-        const id = ctx.params.id;
-        const user = await User.findById(id);
         ctx.render('users/profile', { user });
       } catch (e) {
-        rollbar.handleError(e);
-        throw e;
+        ctx.render('root', { f: buildFormObj(user, e) });
       }
     })
     .get('userEdit', '/users/:id/edit', async (ctx) => {
@@ -63,15 +63,16 @@ export default (router, { User }) => {
       },
     }), async (ctx) => {
       const absolutePath = String(ctx.request.body.files.file.path);
-      const [imageName] = absolutePath.split('/').slice(-1);
+      const { base: imageName } = parse(absolutePath);
       const avatarPath = `/images/${imageName}`;
       const id = Number(ctx.params.id);
+      const defaultAvatar = '/images/default.png';
       const user = await User.findById(id);
       if (ctx.session.userId === id) {
         try {
-          if (user.avatar !== '/images/default.png') {
+          if (user.avatar !== defaultAvatar) {
             const oldImagePath = `${__dirname}/../../public${user.avatar}`;
-            await fs.remove(oldImagePath);
+            await remove(oldImagePath);
           }
           await user.update({
             avatar: avatarPath,
@@ -84,7 +85,6 @@ export default (router, { User }) => {
           ctx.flash.set('Your avatar was updated');
           ctx.render('users/avatar', { f: buildFormObj(user) });
         } catch (e) {
-          rollbar.handleError(e);
           ctx.render('users/avatar', { f: buildFormObj(user, e) });
         }
       } else {
@@ -125,7 +125,7 @@ export default (router, { User }) => {
           });
           ctx.session.userName = `${user.firstName} ${user.lastName}`;
           ctx.flash.set('Your profile was updated');
-          ctx.redirect(router.url('root'));
+          ctx.redirect(`/users/${id}`);
         } catch (e) {
           rollbar.handleError(e);
           ctx.render('users/edit', { f: buildFormObj(user, e) });

@@ -74,4 +74,22 @@ describe('requests', () => {
     server.close();
     done();
   });
+
+  it('restriction on viewing tasks without registration', async () => {
+    const res = await request.agent(server)
+      .get('/tasks/');
+    expect(res).toHaveHTTPStatus(302);
+  });
+
+  it('restriction on viewing task without registration', async () => {
+    const res = await request.agent(server)
+      .get('/tasks/1');
+    expect(res).toHaveHTTPStatus(302);
+  });
+
+  it('restriction on viewing comments without registration', async () => {
+    const res = await request.agent(server)
+      .get('/comment/1');
+    expect(res).toHaveHTTPStatus(302);
+  });
 });

@@ -1,0 +1,22 @@
+extends /layouts/application.pug
+
+block content
+  - const value = f.object[property] === undefined ? '' : f.object[property]
+
+  +formFor(f, { url: urlFor('updateTask', f.object.id), method: 'post' })
+    +input('center', f, 'name', 'name')
+    +input('center', f, 'description', 'description')
+    +input('center', f, 'Tags', 'tags')
+    +select(f, 'assignedToId', users)
+    .row.justify-content-center
+      .form-group.col-sm-5(class=(f.errors[property] && 'has-danger'))
+        div
+          select.form-control(name='form[statusId]' value=`${value}`)
+            each status in statuses
+              option(value= status.id)= status.name
+    input(type="hidden" name="_method" value="PATCH")
+    +button(f)
+    .row.justify-content-center
+      a.btn.btn-warning(href=`/tasks/${taskId}` data-method='get' role='button' rel='nofollow') 
+        i.mr-1.fa-long-arrow-left
+        |   Back

@@ -1,7 +1,7 @@
 import Sequelize from 'sequelize';
 import { encrypt } from '../lib/secure';
 
-export default connect => connect.define('user_info', {
+export default connect => connect.define('User', {
   email: {
     type: Sequelize.STRING,
     unique: {
@@ -35,7 +35,7 @@ export default connect => connect.define('user_info', {
       },
       notEmpty: {
         args: true,
-        msg: 'Please enter your first name.',
+        msg: 'The firstName should not be empty.',
       },
     },
   },
@@ -49,7 +49,7 @@ export default connect => connect.define('user_info', {
       },
       notEmpty: {
         args: true,
-        msg: 'Please enter your last name.',
+        msg: 'The lastName should not be empty.',
       },
     },
   },
