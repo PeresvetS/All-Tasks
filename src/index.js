@@ -3,8 +3,8 @@
 import 'babel-polyfill';
 import path from 'path';
 import Koa from 'koa';
-import { get } from 'lodash';
 import Pug from 'koa-pug';
+import { get } from 'lodash';
 import rollbar from 'rollbar';
 import serve from 'koa-static';
 import helmet from 'koa-helmet';
@@ -23,8 +23,8 @@ import container from './container';
 
 export default() => {
   rollbar.init(process.env.ROLLBAR_KEY);
-  const app = new Koa();
 
+  const app = new Koa();
   app.use(helmet());
   app.keys = ['some secret hurr'];
   app.use(session(app));

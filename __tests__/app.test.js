@@ -70,10 +70,6 @@ describe('requests', () => {
       .get('/users/wronguser');
     expect(res).toHaveHTTPStatus(200);
   });
-  afterEach((done) => {
-    server.close();
-    done();
-  });
 
   it('restriction on viewing tasks without registration', async () => {
     const res = await request.agent(server)
@@ -91,5 +87,10 @@ describe('requests', () => {
     const res = await request.agent(server)
       .get('/comment/1');
     expect(res).toHaveHTTPStatus(302);
+  });
+
+  afterEach((done) => {
+    server.close();
+    done();
   });
 });
