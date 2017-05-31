@@ -62,7 +62,7 @@
         small.p-2.text-center= comment.autorName
         img.p-2.rounded-circle(src=comment.autorAvatar alt='autor avatar' width='120px' height='120px')
       .p-2.d-flex.flex-column
-        small.p-2= changeFormat(comment.updatedAt, 'mmmm d, yyyy')
+        small.p-2.text-center= changeFormat(comment.updatedAt, 'mmmm d, yyyy')
         .p-2.lead= comment.content
       .p-2.d-flex.flex-column.justify-content-center.width10pr
         if userId() === comment.autorId
