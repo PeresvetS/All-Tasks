@@ -64,12 +64,12 @@ const getTasksIdByTagId = async (id, Tag) => {
 
 
 const getIdFromSearch = (requestKey, allTasks) => {
-  const idx = lunr(function () {
+  const idx = lunr(function () { // eslint-disable-line func-names
     this.ref('id');
     this.field('name');
     this.field('description');
 
-    allTasks.forEach(function (obj) {
+    allTasks.forEach(function (obj) {  // eslint-disable-line func-names
       this.add(obj);
     }, this);
   });
