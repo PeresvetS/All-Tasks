@@ -39,6 +39,7 @@ describe('requests', () => {
         .set('content-type', 'application/x-www-form-urlencoded')
         .set('accept', 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8');
     expect(res).toHaveHTTPStatus(302);
+    expect(res.headers.location).toBe('/');
   });
 
   it('restriction profile - avatar', async () => {
@@ -51,18 +52,21 @@ describe('requests', () => {
     const res = await request.agent(server)
       .patch('/users/1/edit');
     expect(res).toHaveHTTPStatus(302);
+    expect(res.headers.location).toBe('/404');
   });
 
   it('restriction delete other users', async () => {
     const res = await request.agent(server)
       .delete('/users/1');
     expect(res).toHaveHTTPStatus(302);
+    expect(res.headers.location).toBe('/users');
   });
 
   it('restriction on the changes of other users', async () => {
     const res = await request.agent(server)
       .patch('/users/1');
     expect(res).toHaveHTTPStatus(302);
+    expect(res.headers.location).toBe('/users');
   });
 
   it('non-existent user', async () => {
@@ -81,6 +85,7 @@ describe('requests', () => {
     const res = await request.agent(server)
       .get('/tasks/1');
     expect(res).toHaveHTTPStatus(302);
+    expect(res.headers.location).toBe('/session/new');
   });
 
   it('restriction on viewing comments without registration', async () => {

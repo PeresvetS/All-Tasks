@@ -5,7 +5,7 @@ export default (router, { User }) => {
   router
     .get('newSession', '/session/new', async (ctx) => {
       const data = {};
-      ctx.render('sessions/new', { f: buildFormObj(data) });
+      ctx.render('session/new', { f: buildFormObj(data) });
     })
     .post('session', '/session', async (ctx) => {
       const { email, password } = ctx.request.body.form;
