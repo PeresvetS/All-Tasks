@@ -11,10 +11,10 @@ export default (router, { Comment }) => {
       try {
         await comment.save();
         ctx.flash.set('Comment has been created');
-        ctx.redirect(`/tasks/${form.TaskId}/`);
+        ctx.redirect(router.url('task', form.TaskId));
       } catch (e) {
         rollbar.handleError(e);
-        ctx.render('root', { f: buildFormObj(comment, e) });
+        ctx.render('tasks/task', { f: buildFormObj(comment, e) });
       }
     })
     .get('editComment', '/comments/:id', async (ctx) => {
@@ -28,10 +28,10 @@ export default (router, { Comment }) => {
           ctx.render('comments/edit', { taskId, f: buildFormObj(comment) });
         } else {
           ctx.flash.set('You can\'t edit comments of other users');
-          ctx.redirect(`/tasks/${taskId}/`);
+          ctx.redirect(router.url('task', taskId));
         }
       } catch (e) {
-        ctx.render('root', { f: buildFormObj(comment, e) });
+        ctx.render('tasks/task', { f: buildFormObj(comment, e) });
       }
     })
     .patch('updateComment', '/comments/:id', async (ctx) => {
@@ -48,9 +48,9 @@ export default (router, { Comment }) => {
           },
         });
         ctx.flash.set('Comment has been updated');
-        ctx.redirect(`/tasks/${taskId}/`);
+        ctx.redirect(router.url('task', taskId));
       } catch (e) {
-        ctx.render('root', { f: buildFormObj(comment, e) });
+        ctx.render('comments/edit', { f: buildFormObj(comment, e) });
       }
     })
     .delete('deleteComment', '/comments/:id', async (ctx) => {
@@ -62,9 +62,9 @@ export default (router, { Comment }) => {
           where: { id },
         });
         ctx.flash.set('Comment has been deleted');
-        ctx.redirect(`/tasks/${taskId}/`);
+        ctx.redirect(router.url('task', taskId));
       } catch (e) {
-        ctx.render('root', { f: buildFormObj(comment, e) });
+        ctx.render('comments/edit', { f: buildFormObj(comment, e) });
       }
     });
 };

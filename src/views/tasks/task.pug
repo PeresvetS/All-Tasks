@@ -37,12 +37,12 @@ block content
           p= task.assignedTo
           img.rounded-circle(src=task.assignedToImg alt='assignedTo avatar' width='150px' height='150px')
     
-      .p-2.text-center.blockquote.d-flex.flex-column(style={width: '60%'})
+      .p-2.text-center.blockquote.d-flex.flex-column(style={'width': '60%'})
         .p-2.mb-auto
           h5 
             strong Description
           p.Lead= task.description
-        .p-2
+        .p-2.btn-group.mx-auto
           a.btn.btn-warning(href=urlFor('editTask', task.id) data-method='get' role='button' rel='nofollow')
             i.mr-1.fa-pencil-square-o
             |   Edit task

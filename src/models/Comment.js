@@ -8,26 +8,12 @@ export default connect => connect.define('Comment', {
         args: true,
         msg: 'The comment should not be empty.',
       },
+      len: {
+        args: [1, +Infinity],
+        msg: 'The comment must contain at least 1 characters.',
+      },
     },
   },
 }, {
-  getterMethods: {
-    getUserName: async function userName() {
-      const user = await this.getUser();
-      return user.fullName;
-    },
-    getUserAvatar: async function userAvatar() {
-      const user = await this.getUser();
-      return user.dataValues.avatar;
-    },
-    getUserId: async function userId() {
-      const user = await this.getUser();
-      return user.dataValues.id;
-    },
-    getTaskId: async function taskId() {
-      const task = await this.getTask();
-      return task.dataValues.id;
-    },
-  },
   freezeTableName: true,
 });

@@ -40,19 +40,5 @@
       },
     },
   }, {
-    getterMethods: {
-      getStatusId: async function statusId() {
-        const status = await this.getStatus();
-        return status.dataValues.id;
-      },
-      getStatusName: async function statusName() {
-        const status = await this.getStatus();
-        return status.dataValues.name;
-      },
-      getStatusAvatar: async function statusAvatar() {
-        const status = await this.getStatus();
-        return status.dataValues.statusAvatar;
-      },
-    },
     freezeTableName: true,
   });

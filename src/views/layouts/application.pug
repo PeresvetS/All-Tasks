@@ -55,9 +55,11 @@ html(lang="en")
               a.nav-link(href=urlFor('newUser')) 
                 i.fa.fa-user-plus
                 |   Sign Up
-    .spaceTop
     .container
         - const msg = flash.get() || errorMsg
         if msg
+          .p-4
           .alert.alert-info.m-3= msg
+        else  
+          .p-5  
         block content

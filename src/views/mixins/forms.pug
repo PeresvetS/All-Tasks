@@ -43,7 +43,7 @@
           input(class='btn btn-primary' type=`${type}` value=`✓ Submit`)
               
   mixin taskBox(task)
-    a(href='/tasks/' + task.id)
+    a(href=urlFor('task', task.id))
       .card.p-3
         img.card-img-top.img-fluid(src= task.statusAvatar)
         .card-block  
@@ -64,9 +64,9 @@
       .p-2.d-flex.flex-column
         small.p-2.text-center= changeFormat(comment.updatedAt, 'mmmm d, yyyy')
         .p-2.lead= comment.content
-      .p-2.d-flex.flex-column.justify-content-center.width10pr
+      .p-2.d-flex.flex-column.justify-content-center(style={'width': '10%'})
         if userId() === comment.autorId
-          a.btn.btn-warning.p-2(href=urlFor('updateComment', comment.id) data-method='get' role='button' rel='nofollow') 
+          a.btn.btn-warning.p-2(href=urlFor('editComment', comment.id) data-method='get' role='button' rel='nofollow') 
             i.mr-1.fa-pencil
             |   Edit
           a.btn.btn-danger.p-2(href=urlFor('deleteComment', comment.id) data-method='delete' role='button' rel='nofollow') 

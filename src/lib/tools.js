@@ -1,51 +1,5 @@
-import lunr from 'lunr';
-
-export const getTaskData = async (task) => {
-  const creator = await task.getCreator();
-  const assignedTo = await task.getAssignedTo();
-  const tags = await task.getTags();
-  const status = await task.getStatusName;
-  const statusId = await task.getStatusId;
-  const statusAvatar = await task.getStatusAvatar;
-  const comments = await task.getComments({
-    order: '"createdAt" DESC',
-  });
-  const data = {
-    id: task.dataValues.id,
-    name: task.dataValues.name,
-    description: task.dataValues.description,
-    createdAt: task.createdAt,
-    creator: creator.fullName,
-    creatorImg: creator.avatar,
-    assignedTo: assignedTo.fullName,
-    assignedToId: assignedTo.id,
-    assignedToImg: assignedTo.avatar,
-    tags,
-    status,
-    statusId,
-    statusAvatar,
-    comments,
-  };
-  return data;
-};
-
-const getCommentsData = async (comment) => {
-  const autorName = await comment.getUserName;
-  const autorAvatar = await comment.getUserAvatar;
-  const autorId = await comment.getUserId;
-  const taskId = await comment.getTaskId;
-
-  const data = {
-    id: comment.id,
-    content: comment.content,
-    createdAt: comment.createdAt,
-    autorName,
-    autorAvatar,
-    autorId,
-    taskId,
-  };
-  return data;
-};
+import { getTaskData, getCommentsData } from './query-builders';
+import getIdFromSearch from './services';
 
 export const getTasks = tasks => Promise.all(tasks
   .map(async task => getTaskData(task)));
@@ -60,28 +14,6 @@ const getTasksIdByTagId = async (id, Tag) => {
   const taskId = await Promise.all(tasks.reduce((acc, item) =>
   [...acc, item.dataValues.id], []));
   return taskId;
-};
-
-
-const getIdFromSearch = (requestKey, allTasks) => {
-  const idx = lunr(function () { // eslint-disable-line func-names
-    this.ref('id');
-    this.field('name');
-    this.field('description');
-
-    allTasks.forEach(function (obj) {  // eslint-disable-line func-names
-      this.add(obj);
-    }, this);
-  });
-  const response = idx.search(requestKey);
-  const tasksId = response
-  .reduce((acc, obj) => {
-    const [arr] = Object.entries(obj)
-  .filter(el => el[0] === 'ref');
-    const id = arr[1];
-    return [...acc, Number(id)];
-  }, []);
-  return tasksId;
 };
 
 export const getFilters = async (query, ctx, Tag, allTasks) =>

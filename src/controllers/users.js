@@ -31,7 +31,7 @@ export default (router, { User }) => {
       try {
         ctx.render('users/profile', { user });
       } catch (e) {
-        ctx.render('root', { f: buildFormObj(user, e) });
+        ctx.render('users', { f: buildFormObj(user, e) });
       }
     })
     .get('userEdit', '/users/:id/edit', async (ctx) => {
@@ -94,6 +94,12 @@ export default (router, { User }) => {
     })
     .delete('userDelete', '/users/:id', async (ctx) => {
       const id = Number(ctx.params.id);
+      const user = await User.findById(id);
+      const defaultAvatar = '/images/default.png';
+      if (user.avatar !== defaultAvatar) {
+        const imagePath = `${__dirname}/../../public${user.avatar}`;
+        await remove(imagePath);
+      }
       if (ctx.session.userId === id) {
         await User.destroy({
           where: {
@@ -125,7 +131,7 @@ export default (router, { User }) => {
           });
           ctx.session.userName = `${user.firstName} ${user.lastName}`;
           ctx.flash.set('Your profile was updated');
-          ctx.redirect(`/users/${id}`);
+          ctx.redirect(router.url('userProfile', id));
         } catch (e) {
           rollbar.handleError(e);
           ctx.render('users/edit', { f: buildFormObj(user, e) });

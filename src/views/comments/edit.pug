@@ -1,12 +1,12 @@
 extends /layouts/application.pug
 
 block content
-  .spaceBody
+  .p-3
   +formFor(f, { url: urlFor('updateComment', f.object.id), method: 'post' })
     +input('center', f, 'content')
     input(type="hidden" name="_method" value="PATCH")
     +button(f)
     .row.justify-content-center
-      a.btn.btn-warning(href=`/tasks/${taskId}` data-method='get' role='button' rel='nofollow') 
+      a.btn.btn-warning(href=urlFor('task', taskId) data-method='get' role='button' rel='nofollow') 
         i.mr-1.fa-long-arrow-left
         |   Back

@@ -8,6 +8,6 @@ block content
     +select(f, 'assignedToId', users)
     +button(f)
     .row.justify-content-center
-      a.btn.btn-warning(href='/tasks/' data-method='get' role='button' rel='nofollow') 
+      a.btn.btn-warning(href=urlFor('tasks') data-method='get' role='button' rel='nofollow') 
         i.mr-1.fa-long-arrow-left
         |   Back

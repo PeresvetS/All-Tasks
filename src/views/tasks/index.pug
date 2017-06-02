@@ -6,71 +6,70 @@ block content
     a.btn.btn-success.btn-lg(href=urlFor('newTask') role=button)
       i.mr-1.fa.fa-plus-circle
       | Create new task
-  .mb-5
+  .mb-2
     hr.my-4
-    .d-flex.flex-row.justify-content-between
-      .p-2
-        .d-flex.flex-row
-          form(action=urlFor('tasks'))
-            .form-group.mr-4
-              label.mr-2 My tasks:
-              select(name='myTasks' class='form-control' value='myTasks')
+    .d-flex.flex-column
+      .d-flex.flex-row.justify-content-around.p-2
+        form.form-inline(action=urlFor('tasks'))
+          .form-group.mr-5
+            label.mr-2 My tasks:
+            select(name='myTasks' class='form-control' value='myTasks')
+              option All
+              option(value='CreatorId') Created
+              option(value='AssignedToId') Assigned to
+          .form-group.mr-5
+            label.mr-2 Status:
+            select(name='status' class='form-control' value='status')
+              option All
+              each status in statuses
+                option(value= status.id)= status.name
+          if tasks
+            - const uniqueTask = new Set();
+            - const isUnique = (task) => { 
+            -  const id = task.assignedToId;
+            -  const answer = !uniqueTask.has(id);  
+            -  uniqueTask.add(id); 
+            -  return answer; };
+            .form-group.mr-5
+              label.mr-2 Appointee:
+              select(name='appointee' class='form-control' value='appointee')
                 option All
-                option(value='CreatorId') Created
-                option(value='AssignedToId') Assigned to
-            .form-group.mr-4
-              label.mr-2 Status:
-              select(name='status' class='form-control' value='status')
-                option All
-                each status in statuses
-                  option(value= status.id)= status.name
-            if tasks
-              - const uniqueTask = new Set();
-              - const isUnique = (task) => { 
-              -  const id = task.assignedToId;
-              -  const answer = !uniqueTask.has(id);  
-              -  uniqueTask.add(id); 
-              -  return answer; };
-              .form-group.mr-4
-                label.mr-2 Appointee:
-                select(name='appointee' class='form-control' value='appointee')
-                  option All
-                  each task in tasks
-                    if isUnique(task)
-                      option(value= task.assignedToId)= task.assignedTo
-            .form-group.mr-4
-              label.mr-2 Tag:
-              select(name='tag' class='form-control' value='tags')
-                option All
-                each tag in tags
-                  option(value= tag.id)= tag.name     
-            .form-group
-              button.btn.btn-info(type='submit')
-                i.mr-1.fa.fa-plus
-                | Apply
-            form(action=urlFor('tasks'))
+                each task in tasks
+                  if isUnique(task)
+                    option(value= task.assignedToId)= task.assignedTo
+          .form-group.mr-5
+            label.mr-2 Tag:
+            select(name='tag' class='form-control' value='tags')
+              option All
+              each tag in tags
+                option(value= tag.id)= tag.name    
+          .btn-group       
+            button.btn.btn-info(type='submit')
+              i.mr-1.fa.fa-plus
+              | Apply
+              form(action=urlFor('tasks'))
               .form-group
                 button.btn.btn-warning(type='submit')
                   i.mr-1.fa.fa-minus
-                  | Reset all    
-          
-      .p-2.d-flex.flex-column.justify-content-between
-          .p-2
-          .p-2.blockquote.blockquote-reverse
+                  | Reset all
+      .p-4    
+      .p-2.d-flex.flex-row.justify-content-between
+          .p-2.d-flex.align-items-end
+            +formFor(f, { url: urlFor('tasks'), method: 'get' })
+              .d-flex.flex-row
+                +input('left', f, 'search', 'search for by name and description')
+                .form-group
+                  button.btn.btn-primary(type="submit")  
+                    i.mr-1.fa.fa-search  
+          .p-2.blockquote.blockquote-reverse.mb-0
             p.blockquote-footer Now
             p=moment().format('LLLL')
-          +formFor(f, { url: urlFor('tasks'), method: 'get' })
-            .d-flex.flex-row
-              +input('left', f, 'search', 'search for by name and description')
-              .form-group
-                button.btn.btn-primary(type="submit")  
-                  i.mr-1.fa.fa-search  
     hr.my-4              
   
-  .spaceMin
-  .row
-    .col-12
-      .card-columns
-        if tasks
-          each task in tasks
-              +taskBox(task)
+    .p-2
+    .row
+      .col-12
+        .card-columns
+          if tasks
+            each task in tasks
+                +taskBox(task)

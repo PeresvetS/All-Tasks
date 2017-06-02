@@ -1,8 +1,10 @@
 import { parse } from 'url';
 import rollbar from 'rollbar';
 import moment from 'moment';
+import { getTaskData } from '../lib/query-builders';
 import buildFormObj from '../lib/formObjectBuilder';
-import { getTaskData, getComments, getTasks, getFilters } from '../lib/tools';
+import { getComments, getTasks, getFilters } from '../lib/tools';
+
 
 export default (router, { User, Task, TaskStatus, Tag, Comment }) => {
   router
@@ -60,7 +62,7 @@ export default (router, { User, Task, TaskStatus, Tag, Comment }) => {
       try {
         ctx.render('tasks/edit', { taskId, users, statuses, f: buildFormObj(task) });
       } catch (e) {
-        ctx.render('root', { f: buildFormObj(task, e) });
+        ctx.render('tasks/task', { f: buildFormObj(task, e) });
       }
     })
     .patch('updateTask', '/tasks/:id/edit', async (ctx) => {
@@ -86,7 +88,7 @@ export default (router, { User, Task, TaskStatus, Tag, Comment }) => {
             task.createTag({ name: tag }))));
         }
         ctx.flash.set('Task was updated');
-        ctx.redirect(`/tasks/${id}`);
+        ctx.redirect(router.url('task', id));
       } catch (e) {
         ctx.render('tasks/edit', { f: buildFormObj(task, e) });
       }
@@ -101,7 +103,7 @@ export default (router, { User, Task, TaskStatus, Tag, Comment }) => {
         ctx.flash.set('Task has been deleted');
         ctx.redirect(router.url('tasks'));
       } catch (e) {
-        ctx.render('root', { f: buildFormObj(task, e) });
+        ctx.render('tasks/task', { f: buildFormObj(task, e) });
       }
     });
 };
