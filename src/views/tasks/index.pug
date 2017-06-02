@@ -11,13 +11,13 @@ block content
     .d-flex.flex-column
       .d-flex.flex-row.justify-content-around.p-2
         form.form-inline(action=urlFor('tasks'))
-          .form-group.mr-5
+          .form-group.mr-4
             label.mr-2 My tasks:
             select(name='myTasks' class='form-control' value='myTasks')
               option All
               option(value='CreatorId') Created
               option(value='AssignedToId') Assigned to
-          .form-group.mr-5
+          .form-group.mr-4
             label.mr-2 Status:
             select(name='status' class='form-control' value='status')
               option All
@@ -30,14 +30,14 @@ block content
             -  const answer = !uniqueTask.has(id);  
             -  uniqueTask.add(id); 
             -  return answer; };
-            .form-group.mr-5
+            .form-group.mr-4
               label.mr-2 Appointee:
               select(name='appointee' class='form-control' value='appointee')
                 option All
                 each task in tasks
                   if isUnique(task)
                     option(value= task.assignedToId)= task.assignedTo
-          .form-group.mr-5
+          .form-group.mr-4
             label.mr-2 Tag:
             select(name='tag' class='form-control' value='tags')
               option All

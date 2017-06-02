@@ -16,7 +16,7 @@ export const getTaskData = async (task) => {
     assignedTo: assignedTo.fullName,
     assignedToId: assignedTo.id,
     assignedToImg: assignedTo.avatar,
-    status: status.dataValues.namme,
+    status: status.dataValues.name,
     statusId: status.dataValues.id,
     statusAvatar: status.dataValues.statusAvatar,
     tags,

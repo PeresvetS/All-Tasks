@@ -63,7 +63,7 @@
         img.p-2.rounded-circle(src=comment.autorAvatar alt='autor avatar' width='120px' height='120px')
       .p-2.d-flex.flex-column
         small.p-2.text-center= changeFormat(comment.updatedAt, 'mmmm d, yyyy')
-        .p-2.lead= comment.content
+        .p-2.lead.text-center= comment.content
       .p-2.d-flex.flex-column.justify-content-center(style={'width': '10%'})
         if userId() === comment.autorId
           a.btn.btn-warning.p-2(href=urlFor('editComment', comment.id) data-method='get' role='button' rel='nofollow') 
