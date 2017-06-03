@@ -25,17 +25,13 @@ block content
                 option(value= status.id)= status.name
           if tasks
             - const uniqueTask = new Set();
-            - const isUnique = (task) => { 
-            -  const id = task.assignedToId;
-            -  const answer = !uniqueTask.has(id);  
-            -  uniqueTask.add(id); 
-            -  return answer; };
+
             .form-group.mr-4
               label.mr-2 Appointee:
               select(name='appointee' class='form-control' value='appointee')
                 option All
                 each task in tasks
-                  if isUnique(task)
+                  if isUnique(task, uniqueTask)
                     option(value= task.assignedToId)= task.assignedTo
           .form-group.mr-4
             label.mr-2 Tag:

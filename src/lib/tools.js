@@ -1,6 +1,14 @@
 import { getTaskData, getCommentsData } from './query-builders';
 import getIdFromSearch from './services';
 
+
+export const isUnique = (task, uniqueTask) => {
+  const id = task.assignedToId;
+  const answer = !uniqueTask.has(id);
+  uniqueTask.add(id);
+  return answer;
+};
+
 export const getTasks = tasks => Promise.all(tasks
   .map(async task => getTaskData(task)));
 

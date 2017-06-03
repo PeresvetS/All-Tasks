@@ -1,6 +1,6 @@
 {
   "name": "all-task",
-  "version": "0.1.0",
+  "version": "0.3.0",
   "description": "Hexlet project",
   "main": "dist/index.js",
   "scripts": {
@@ -20,7 +20,7 @@
     "task-manager": "dist/bin/taskManager.js"
   },
   "engines": {
-    "node": "7.7.1"
+    "node": "8.0.0"
   },
   "jest": {
     "testEnvironment": "node",

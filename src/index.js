@@ -17,8 +17,9 @@ import bodyParser from 'koa-bodyparser';
 import session from 'koa-generic-session';
 import methodOverride from 'koa-methodoverride';
 import getWebpackConfig from '../webpack.config.babel';
-import addRoutes from './controllers';
 import container from './container';
+import addRoutes from './controllers';
+import { isUnique } from './lib/tools';
 
 
 export default() => {
@@ -94,6 +95,7 @@ export default() => {
       { get },
       { urlFor: (...args) => router.url(...args) },
       { changeFormat: (date, format) => dateFormat(date, format) },
+      // { isUnique },
     ],
   });
   pug.use(app);
