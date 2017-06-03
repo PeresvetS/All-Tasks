@@ -20,7 +20,7 @@
     "task-manager": "dist/bin/taskManager.js"
   },
   "engines": {
-    "node": "8.0.0"
+    "node": "7.7.1"
   },
   "jest": {
     "testEnvironment": "node",

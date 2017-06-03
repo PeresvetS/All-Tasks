@@ -95,7 +95,7 @@ export default() => {
       { get },
       { urlFor: (...args) => router.url(...args) },
       { changeFormat: (date, format) => dateFormat(date, format) },
-      // { isUnique },
+      { isUnique },
     ],
   });
   pug.use(app);
