@@ -1,6 +1,6 @@
 {
   "name": "all-task",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Hexlet project",
   "main": "dist/index.js",
   "scripts": {
@@ -32,14 +32,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/PeresvetS/project-lvl4-s109.git"
+    "url": "git+https://github.com/PeresvetS/All-Tasks.git"
   },
   "author": "Peresvet",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/PeresvetS/project-lvl4-s109/issues"
+    "url": "https://github.com/PeresvetS/All-Tasks/issues"
   },
-  "homepage": "https://github.com/PeresvetS/project-lvl4-s109#readme",
+  "homepage": "https://github.com/PeresvetS/All-Tasks#readme",
   "dependencies": {
     "autoprefixer": "^7.1.0",
     "babel-cli": "*",
